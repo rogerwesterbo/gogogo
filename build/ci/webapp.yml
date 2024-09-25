@@ -1,0 +1,13 @@
+build-webapp:
+  stage: buildandtest
+  image: ncr.sky.nhn.no/dockerhub/library/node:latest
+  before_script:
+    - cd $CI_PROJECT_DIR
+    - cd web/webapp
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - build
+    expire_in: 1 week

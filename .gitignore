@@ -1,0 +1,3 @@
+__debug*
+data/dragonflydb/*.dfs
+data/dex/dbs/dex.db

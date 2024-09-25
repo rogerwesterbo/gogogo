@@ -1,0 +1,21 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug API",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}/cmd/goapi/main.go",
+      "env": {
+        "DEVELOPMENT": "true",
+        "ADMIN_API_KEY": "0191b7b0-0144-797e-be4d-8f7edcae8713",
+        "REDIS_URL": "localhost:8379",
+        "REDIS_PASSWORD": "S3cret!"
+      }
+    }
+  ]
+}

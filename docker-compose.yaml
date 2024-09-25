@@ -1,0 +1,101 @@
+services:
+  dragonfly:
+    image: "docker.dragonflydb.io/dragonflydb/dragonfly"
+    ulimits:
+      memlock: -1
+    environment:
+      - DFLY_requirepass=S3cret!
+    ports:
+      - "8379:6379"
+    # For better performance, consider `host` mode instead `port` to avoid docker NAT.
+    # `host` mode is NOT currently supported in Swarm Mode.
+    # https://docs.docker.com/compose/compose-file/compose-file-v3/#network_mode
+    # network_mode: "host"
+    volumes:
+      - ./data/dragonflydb:/data
+
+  dex:
+    image: bitnami/dex:2.41.1
+    restart: always
+    volumes:
+      - ./data/dex/configs:/configs
+      - ./data/dex/dbs:/dbs
+    command: serve /configs/dex-config-default.yaml
+    depends_on:
+      init-dex-db:
+        condition: service_completed_successfully
+      openldap:
+        condition: service_started
+
+    links:
+      - openldap
+    ports:
+      - "5554:5554"
+      - "5556:5556"
+      - "5557:5557"
+      - "5558:5558"
+
+  init-dex-db:
+    image: busybox
+    volumes:
+      - ./data/dex/dbs:/dbs
+    entrypoint:
+      [
+        "sh",
+        "-c",
+        "touch /dbs/dex.db && chmod 766 /dbs/dex.db && chmod 777 /dbs && echo 'dex.db file created.'",
+      ]
+    restart: "no"
+
+  openldap:
+    image: osixia/openldap:1.5.0
+    # Copying is required because the entrypoint modifies the *.ldif files.
+    # For verbose output, use:  command: ["--copy-service", "--loglevel", "debug"]
+    command: ["--copy-service"]
+    environment:
+      # Required if using LDAPS:
+      # Since Dex doesn't use a client TLS certificate, downgrade from "demand" to "try".
+      LDAP_TLS_VERIFY_CLIENT: try
+      LDAP_ORGANISATION: "Gogogo by NHN"
+      LDAP_DOMAIN: gogogo.dev
+      #- LDAP_READONLY_USER_USERNAME=readuser
+      #- LDAP_READONLY_USER_PASSWORD=read
+    # The hostname is required if using LDAPS with certificate validation.
+    # In Dex, use the same hostname (with port) for `connectors[].config.host`.
+    #hostname: YOUR-HOSTNAME
+    #
+    # https://github.com/osixia/docker-openldap#seed-ldap-database-with-ldif
+    # Option 1: Add custom seed file -> mount to         /container/service/slapd/assets/config/bootstrap/ldif/custom/
+    # Option 2: Overwrite default seed file -> mount to  /container/service/slapd/assets/config/bootstrap/ldif/
+    volumes:
+      - ./data/openldap/config-ldap.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/custom-config.ldif
+    ports:
+      - "389:389"
+
+  goapi:
+    build:
+      context: .
+      dockerfile: cmd/goapi/Dockerfile
+    ports:
+      - "8888:8888"
+    depends_on:
+      - dragonfly
+    environment:
+      - REDIS_URL=dragonfly:6379
+      - REDIS_PASSWORD=S3cret!
+      - ADMIN_API_KEY=0191b7b0-0144-797e-be4d-8f7edcae8713
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/health"]
+
+  goweb:
+    build:
+      context: ./web/goweb
+      dockerfile: Dockerfile.compose
+    ports:
+      - "8999:8080"
+    depends_on:
+      - goapi
+    environment:
+      - API_URL=http://api:8888
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8999"]

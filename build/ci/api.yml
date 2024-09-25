@@ -1,0 +1,23 @@
+build-api:
+  stage: buildandtest
+  image: ncr.sky.nhn.no/dockerhub/library/golang:latest
+  before_script:
+    - cd $CI_PROJECT_DIR
+  script:
+    - go get ./...
+    - go get -t ./...
+    - CGO_ENABLED=0 go build -o dist/gogogo -ldflags '-w -extldflags "-static"' cmd/api/main.go
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 week
+
+sast-check:
+  image: ncr.sky.nhn.no/dockerhub/golang:1.23-alpine
+  stage: buildandtest
+  dependencies:
+    - build-api
+  before_script:
+    - go install github.com/securego/gosec/v2/cmd/gosec@latest
+  script:
+    - gosec ./...

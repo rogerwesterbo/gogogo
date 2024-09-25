@@ -1,0 +1,17 @@
+
+FROM ncr.sky.nhn.no/dockerhub/node:lts-alpine as builder
+WORKDIR /build
+COPY package.json .
+COPY package-lock.json .
+
+RUN apk update && apk add gettext
+
+RUN npm ci
+COPY . .
+
+RUN npm run build
+FROM ncr.sky.nhn.no/dockerhub/nginxinc/nginx-unprivileged:alpine
+
+WORKDIR /app
+
+COPY --from=builder /build/dist /app
