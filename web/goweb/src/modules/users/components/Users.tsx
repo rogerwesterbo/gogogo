@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { lazy, useEffect, useState } from 'react';
 import { getUsers } from '../services/user-service';
 import { Blog } from '../../core/components/models/blog';
 import PageContent from '../../shared/components/PageContent';
@@ -42,3 +42,4 @@ function Users() {
 }
 
 export default Users;
+export const UsersPage = lazy(() => import('./Users'));

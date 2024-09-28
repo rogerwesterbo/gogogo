@@ -1,8 +1,20 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Avatar from './Avatar';
 
 function NavBar() {
   const [showMenu, setShowMenu] = useState(false);
+  const [dark, setDark] = useState(true);
+
+  const darkModeHandler = () => {
+    setDark(!dark);
+    document.body.classList.toggle('dark');
+  };
+
+  if (dark) {
+    document.body.classList.add('dark');
+  }
+
   const divStyle = {
     top: '1rem',
     left: '0.8rem',
@@ -72,20 +84,27 @@ function NavBar() {
               </a>
             </li>
             <li className="flex-1 md:flex-none md:mr-3">
-              <a className="inline-block text-gray-600 no-underline hover:text-gray-200 hover:text-underline py-2 px-4" href="#">
+              {/* <a className="inline-block text-gray-600 no-underline hover:text-gray-200 hover:text-underline py-2 px-4" href="#">
                 link
+              </a> */}
+              <a onClick={() => darkModeHandler()} className="inline-block py-2 px-4 text-white no-underline">
+                {dark && <span>Ligth</span>}
+                {!dark && <span>Dark</span>}
               </a>
             </li>
             <li className="flex-1 md:flex-none md:mr-3">
               <div className="relative inline-block">
                 <button onClick={handleClick} className="drop-button text-white focus:outline-none">
-                  <span className="pr-2">
+                  <span className="">
                     <i className="em em-robot_face"></i>
                   </span>{' '}
-                  Hi, User
-                  <svg className="h-3 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                  </svg>
+                  {/* Hi, User */}
+                  <div className="flex">
+                    <Avatar />
+                    <svg className="h-6 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </div>
                 </button>
                 {showMenu && (
                   <div className="dropdownlist absolute bg-gray-800 text-white right-0 mt-3 p-3 overflow-auto z-30">

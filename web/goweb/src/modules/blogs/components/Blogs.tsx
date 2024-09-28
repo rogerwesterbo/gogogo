@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { lazy, useEffect, useState } from 'react';
 import { getBlogs } from '../services/blog-service';
 import { Blog } from '../../core/components/models/blog';
 import Card from '../../shared/components/Card';
@@ -41,3 +41,4 @@ function Blogs() {
 }
 
 export default Blogs;
+export const BlogsPage = lazy(() => import('./Blogs'));

@@ -1,3 +1,4 @@
+import { lazy } from 'react';
 import PageContent from '../../shared/components/PageContent';
 
 function Home() {
@@ -9,3 +10,4 @@ function Home() {
 }
 
 export default Home;
+export const HomePage = lazy(() => import('./Home'));

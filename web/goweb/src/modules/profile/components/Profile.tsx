@@ -1,6 +1,7 @@
 import { jwtDecode } from 'jwt-decode';
 import { User } from '../../core/components/models/user';
 import PageContent from '../../shared/components/PageContent';
+import { lazy } from 'react';
 
 function Profile() {
   const token = localStorage.getItem('token');
@@ -44,3 +45,4 @@ function Profile() {
 }
 
 export default Profile;
+export const ProfilePage = lazy(() => import('./Profile'));

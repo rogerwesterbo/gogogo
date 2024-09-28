@@ -1,3 +1,4 @@
+import { lazy } from 'react';
 import PageContent from '../../shared/components/PageContent';
 
 function About() {
@@ -11,3 +12,4 @@ function About() {
 }
 
 export default About;
+export const AboutPage = lazy(() => import('./About'));

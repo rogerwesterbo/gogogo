@@ -1,5 +1,5 @@
 import { jwtDecode } from 'jwt-decode';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
 function Callback() {
@@ -29,3 +29,4 @@ function Callback() {
 }
 
 export default Callback;
+export const CallbackPage = lazy(() => import('./Callback'));

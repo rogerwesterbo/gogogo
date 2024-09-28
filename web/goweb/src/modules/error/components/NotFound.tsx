@@ -1,3 +1,5 @@
+import { lazy } from 'react';
+
 function NotFound() {
   return (
     <div
@@ -15,3 +17,4 @@ function NotFound() {
 }
 
 export default NotFound;
+export const NotFoundPage = lazy(() => import('./NotFound'));

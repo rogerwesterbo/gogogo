@@ -1,3 +1,4 @@
+import { lazy } from 'react';
 import { PulseLoader } from 'react-spinners';
 import { v7 as uuidv7 } from 'uuid';
 
@@ -50,3 +51,4 @@ function Login() {
 }
 
 export default Login;
+export const LoginPage = lazy(() => import('./Login'));
