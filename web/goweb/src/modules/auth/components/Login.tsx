@@ -1,3 +1,4 @@
+import { PulseLoader } from 'react-spinners';
 import { v7 as uuidv7 } from 'uuid';
 
 function Login() {
@@ -5,6 +6,14 @@ function Login() {
 
   if (accessToken) {
     window.location.href = '/';
+    return (
+      <div
+        className="flex justify-center items-center 
+       h-screen"
+      >
+        <PulseLoader color="green" />
+      </div>
+    );
   }
 
   function redirectToDex() {

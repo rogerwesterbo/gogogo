@@ -1,10 +1,17 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function NavBar() {
+  const [showMenu, setShowMenu] = useState(false);
   const divStyle = {
     top: '1rem',
     left: '0.8rem',
   };
+
+  const handleClick = () => {
+    setShowMenu(!showMenu);
+  };
+
   return (
     <nav className="bg-gray-800 pt-2 md:pt-1 pb-1 px-1 mt-0 h-auto fixed w-full z-20 top-0">
       <div className="flex flex-wrap items-center">
@@ -71,7 +78,7 @@ function NavBar() {
             </li>
             <li className="flex-1 md:flex-none md:mr-3">
               <div className="relative inline-block">
-                <button className="drop-button text-white focus:outline-none">
+                <button onClick={handleClick} className="drop-button text-white focus:outline-none">
                   <span className="pr-2">
                     <i className="em em-robot_face"></i>
                   </span>{' '}
@@ -80,18 +87,32 @@ function NavBar() {
                     <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                   </svg>
                 </button>
-                <div className="dropdownlist absolute bg-gray-800 text-white right-0 mt-3 p-3 overflow-auto z-30">
-                  <Link to={'/profile'} className="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block">
-                    <i className="fa fa-user fa-fw"></i> Profile
-                  </Link>
-                  <Link to={'/settings'} className="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block">
-                    <i className="fa fa-cog fa-fw"></i> Settings
-                  </Link>
-                  <div className="border border-gray-800"></div>
-                  <Link to={'/logout'} className="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block">
-                    <i className="fas fa-sign-out-alt fa-fw"></i> Log out
-                  </Link>
-                </div>
+                {showMenu && (
+                  <div className="dropdownlist absolute bg-gray-800 text-white right-0 mt-3 p-3 overflow-auto z-30">
+                    <Link
+                      to={'/profile'}
+                      onClick={handleClick}
+                      className="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"
+                    >
+                      <i className="fa fa-user fa-fw"></i> Profile
+                    </Link>
+                    <Link
+                      to={'/settings'}
+                      onClick={handleClick}
+                      className="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"
+                    >
+                      <i className="fa fa-cog fa-fw"></i> Settings
+                    </Link>
+                    <div className="border border-gray-800"></div>
+                    <Link
+                      to={'/logout'}
+                      onClick={handleClick}
+                      className="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"
+                    >
+                      <i className="fas fa-sign-out-alt fa-fw"></i> Log out
+                    </Link>
+                  </div>
+                )}
               </div>
             </li>
           </ul>
