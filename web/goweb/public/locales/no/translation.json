@@ -1,0 +1,31 @@
+{
+  "common": {
+    "dark": "Mørk",
+    "light": "Lys",
+    "search": "Søk"
+  },
+  "nav": {
+    "about": "Om",
+    "blogs": "Blogg",
+    "home": "Hjem",
+    "profile": "Profil",
+    "settings": "Innstillinger"
+  },
+  "pages": {
+    "about": {
+      "title": "Om GoWeb"
+    },
+    "blogs": {
+      "title": "Blogg"
+    },
+    "home": {
+      "title": "Velkommen til GoWeb"
+    },
+    "profile": {
+      "title": "Profil"
+    },
+    "settings": {
+      "title": "Innstillinger"
+    }
+  }
+}

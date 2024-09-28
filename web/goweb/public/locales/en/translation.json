@@ -1,0 +1,31 @@
+{
+  "common": {
+    "dark": "Dark",
+    "light": "Light",
+    "search": "Search"
+  },
+  "nav": {
+    "about": "About",
+    "blogs": "Blogs",
+    "home": "Home",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "pages": {
+    "about": {
+      "title": "About GoWeb"
+    },
+    "blogs": {
+      "title": "Blogs"
+    },
+    "home": {
+      "title": "Welcome to GoWeb"
+    },
+    "profile": {
+      "title": "Profile"
+    },
+    "settings": {
+      "title": "Settings"
+    }
+  }
+}

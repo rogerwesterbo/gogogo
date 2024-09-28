@@ -3,10 +3,12 @@ import { getBlogs } from '../services/blog-service';
 import { Blog } from '../../core/components/models/blog';
 import Card from '../../shared/components/Card';
 import PageContent from '../../shared/components/PageContent';
+import { useTranslation } from 'react-i18next';
 
 function Blogs() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -24,9 +26,9 @@ function Blogs() {
   }
 
   return (
-    <PageContent title="Blogs">
+    <PageContent title={t('nav.blogs')}>
       <div>
-        <h2>Blogs</h2>
+        <h2>{t('pages.blogs.title')}</h2>
         {blogs.length === 0 && <div>No blogs yet ...</div>}
         {blogs.length > 0 && (
           <div className="grid grid-cols-3 gap-3">

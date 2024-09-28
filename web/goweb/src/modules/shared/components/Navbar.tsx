@@ -1,14 +1,22 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Avatar from './Avatar';
+import { useTranslation } from 'react-i18next';
 
 function NavBar() {
+  const { t, i18n } = useTranslation();
   const [showMenu, setShowMenu] = useState(false);
   const [dark, setDark] = useState(true);
+  const [lang, setLang] = useState('en');
 
   const darkModeHandler = () => {
     setDark(!dark);
     document.body.classList.toggle('dark');
+  };
+
+  const languageHandler = (lng: string) => {
+    setLang(lng);
+    i18n.changeLanguage(lng);
   };
 
   if (dark) {
@@ -65,7 +73,7 @@ function NavBar() {
           <span className="relative w-full">
             <input
               type="search"
-              placeholder="Search"
+              placeholder={t('common.search')}
               className="w-full bg-gray-900 text-white transition border border-transparent focus:outline-none focus:border-gray-400 rounded py-3 px-2 pl-10 appearance-none leading-normal"
             />
             <div className="absolute search-icon" style={divStyle}>
@@ -79,17 +87,26 @@ function NavBar() {
         <div className="flex w-full pt-2 content-center justify-between md:w-1/3 md:justify-end">
           <ul className="list-reset flex justify-between flex-1 md:flex-none items-center">
             <li className="flex-1 md:flex-none md:mr-3">
-              <a className="inline-block py-2 px-4 text-white no-underline" href="#">
-                Active
-              </a>
+              {(() => {
+                if (lang === 'en') {
+                  return (
+                    <a onClick={() => languageHandler('no')} className="inline-block py-2 px-4 text-white no-underline">
+                      Norsk
+                    </a>
+                  );
+                } else {
+                  return (
+                    <a onClick={() => languageHandler('en')} className="inline-block py-2 px-4 text-white no-underline">
+                      English
+                    </a>
+                  );
+                }
+              })()}
             </li>
             <li className="flex-1 md:flex-none md:mr-3">
-              {/* <a className="inline-block text-gray-600 no-underline hover:text-gray-200 hover:text-underline py-2 px-4" href="#">
-                link
-              </a> */}
               <a onClick={() => darkModeHandler()} className="inline-block py-2 px-4 text-white no-underline">
-                {dark && <span>Ligth</span>}
-                {!dark && <span>Dark</span>}
+                {dark && <span>{t('common.light')}</span>}
+                {!dark && <span>{t('common.dark')}</span>}
               </a>
             </li>
             <li className="flex-1 md:flex-none md:mr-3">
@@ -98,7 +115,6 @@ function NavBar() {
                   <span className="">
                     <i className="em em-robot_face"></i>
                   </span>{' '}
-                  {/* Hi, User */}
                   <div className="flex">
                     <Avatar />
                     <svg className="h-6 fill-current inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">

@@ -2,8 +2,10 @@ import { jwtDecode } from 'jwt-decode';
 import { User } from '../../core/components/models/user';
 import PageContent from '../../shared/components/PageContent';
 import { lazy } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function Profile() {
+  const { t } = useTranslation();
   const token = localStorage.getItem('token');
   if (!token) {
     return <>Missing user token</>;
@@ -16,7 +18,7 @@ function Profile() {
   const user = decoded as User;
 
   return (
-    <PageContent title="Profile">
+    <PageContent title={t('nav.profile')}>
       <div>
         <h1>Profile</h1>
         <div>
