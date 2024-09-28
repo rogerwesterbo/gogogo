@@ -1,8 +1,12 @@
+import PageContent from '../../shared/components/PageContent';
+
 function Settings() {
   return (
-    <div>
-      <h1>Settings</h1>
-    </div>
+    <PageContent title="Settings">
+      <div>
+        <h1>Settings</h1>
+      </div>
+    </PageContent>
   );
 }
 export default Settings;

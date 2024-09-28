@@ -14,7 +14,6 @@ function Callback() {
     const decoded = jwtDecode(accessToken);
     if (decoded) {
       setData(decoded);
-      console.log('decoded jwt', decoded);
       localStorage.setItem('token', accessToken);
       setLoading(false);
     }

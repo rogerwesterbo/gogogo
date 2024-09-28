@@ -1,8 +1,10 @@
+import PageContent from '../../shared/components/PageContent';
+
 function Home() {
   return (
-    <div>
-      <h2>Home</h2>
-    </div>
+    <PageContent title="Home">
+      <span>Home content</span>
+    </PageContent>
   );
 }
 

@@ -1,5 +1,6 @@
 import { jwtDecode } from 'jwt-decode';
 import { User } from '../../core/components/models/user';
+import PageContent from '../../shared/components/PageContent';
 
 function Profile() {
   const token = localStorage.getItem('token');
@@ -14,29 +15,31 @@ function Profile() {
   const user = decoded as User;
 
   return (
-    <div>
-      <h1>Profile</h1>
+    <PageContent title="Profile">
       <div>
-        <table className="table-auto">
-          <thead>
-            <tr>
-              <th>Property</th>
-              <th>Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Name</td>
-              <td>{user?.name}</td>
-            </tr>
-            <tr>
-              <td>Email</td>
-              <td>{user?.email}</td>
-            </tr>
-          </tbody>
-        </table>
+        <h1>Profile</h1>
+        <div>
+          <table className="table-auto">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Name</td>
+                <td>{user?.name}</td>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td>{user?.email}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+    </PageContent>
   );
 }
 

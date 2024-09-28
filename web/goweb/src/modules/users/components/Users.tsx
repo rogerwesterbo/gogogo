@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getUsers } from '../services/user-service';
 import { Blog } from '../../core/components/models/blog';
+import PageContent from '../../shared/components/PageContent';
 
 function Users() {
   const [users, setUsers] = useState([]);
@@ -10,7 +11,6 @@ function Users() {
     const fetchUsers = async () => {
       const data = await getUsers();
       if (data) {
-        console.log(data);
         setUsers(data);
       }
       setLoading(false);
@@ -23,19 +23,21 @@ function Users() {
   }
 
   return (
-    <div>
-      <h2>Users</h2>
-      {users.length === 0 && <div>No users found</div>}
-      {users.length > 0 && (
-        <ul>
-          {users.map((blog: Blog) => (
-            <li key={blog.id}>
-              {blog.title} - {blog.body}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+    <PageContent title="Users">
+      <div>
+        <h2>Users</h2>
+        {users.length === 0 && <div>No users found</div>}
+        {users.length > 0 && (
+          <ul>
+            {users.map((blog: Blog) => (
+              <li key={blog.id}>
+                {blog.title} - {blog.body}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </PageContent>
   );
 }
 
