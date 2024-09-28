@@ -1,102 +1,53 @@
-import { createBrowserRouter, LoaderFunctionArgs, redirect, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, createRoutesFromElements, defer, Route } from 'react-router-dom';
 import './App.css';
-import Layout from './modules/layout/Layout';
 
-import { dexAuthProvider } from './auth/dexAuth';
-import Login from './modules/login/components/Login';
+import Login from './modules/auth/components/Login';
 import Callback from './modules/callback/components/Callback';
 import NotFound from './modules/error/components/NotFound';
-import Logout from './modules/logout/components/Logout';
+import Logout from './modules/auth/components/Logout';
+
+import { AuthLayout } from './modules/auth/components/AuthLayout';
+import Home from './modules/home/components/Home';
+import Profile from './modules/profile/components/Profile';
+import Users from './modules/users/components/Users';
+import About from './modules/about/components/About';
+import { ProtectedLayout } from './modules/auth/components/ProtectedLayout';
 import { jwtDecode } from 'jwt-decode';
+import Blogs from './modules/blogs/components/Blogs';
+import Settings from './modules/settings/components/Settings';
 
-const router = createBrowserRouter([
-  {
-    id: 'root',
-    path: '/',
-    loader() {
-      // Our root route always provides the user, if logged in
-      return { user: dexAuthProvider.username };
-    },
-    Component: Layout,
-    children: [
-      {
-        index: true,
-        Component: Layout,
-        loader: protectedLoader,
-      },
-      // {
-      //   path: 'login',
-      //   action: loginAction,
-      //   loader: loginLoader,
-      //   Component: LoginPage,
-      // },
-      // {
-      //   path: 'protected',
-      //   loader: protectedLoader,
-      //   Component: ProtectedPage,
-      // },
-    ],
-  },
-  {
-    path: '/login',
-    Component: Login,
-    loader: loginLoader,
-  },
-  {
-    path: '/logout',
-    Component: Logout,
-  },
-  {
-    path: '/auth/callback',
-    Component: Callback,
-  },
-  {
-    path: '*',
-    Component: NotFound,
-  },
-]);
+const getUserData = () =>
+  new Promise((resolve) =>
+    setTimeout(() => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        resolve(null);
+      } else {
+        const decodedToken = jwtDecode(token);
 
-function App() {
-  return <RouterProvider router={router} fallbackElement={<p>Initial Load...</p>} />;
-}
+        resolve(decodedToken);
+      }
+    }, 0),
+  );
 
-export default App;
+export const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route element={<AuthLayout />} loader={() => defer({ userPromise: getUserData() })}>
+      <Route path="/login" element={<Login />} />
+      <Route path="/logout" element={<Logout />} />
+      <Route path="/auth/callback" element={<Callback />} />
 
-async function loginLoader() {
-  const accessToken = localStorage.getItem('token');
-  if (!accessToken) {
-    return null;
-  }
-  const decoded = jwtDecode(accessToken);
-  if (decoded) {
-    dexAuthProvider.isAuthenticated = true;
-    const user: User = decoded as User;
-    if (user) {
-      dexAuthProvider.username = user?.name;
-    } else {
-      dexAuthProvider.username = 'unknown';
-    }
-  }
+      <Route path="/" element={<ProtectedLayout />}>
+        <Route index element={<Home />} />
+        <Route path="users" element={<Users />} />
+        <Route path="blogs" element={<Blogs />} />
+        <Route path="about" element={<About />} />
 
-  if (dexAuthProvider.isAuthenticated) {
-    return redirect('/');
-  }
-  return null;
-}
+        <Route path="settings" element={<Settings />} />
 
-function protectedLoader({ request }: LoaderFunctionArgs) {
-  // If the user is not logged in and tries to access `/protected`, we redirect
-  // them to `/login` with a `from` parameter that allows login to redirect back
-  // to this page upon successful authentication
-  if (!dexAuthProvider.isAuthenticated) {
-    const params = new URLSearchParams();
-    params.set('from', new URL(request.url).pathname);
-    return redirect('/login?' + params.toString());
-  }
-  return null;
-}
-
-interface User {
-  name: string;
-  email: string;
-}
+        <Route path="profile" element={<Profile />} />
+      </Route>
+      <Route path="*" element={<NotFound />} />
+    </Route>,
+  ),
+);
