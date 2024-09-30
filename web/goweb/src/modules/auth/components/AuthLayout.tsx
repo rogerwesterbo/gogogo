@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { useLoaderData, useOutlet, Await } from 'react-router-dom';
+import { useLoaderData, useOutlet, Await, ScrollRestoration } from 'react-router-dom';
 
 import { AuthProvider } from '../hooks/useAuth';
 
@@ -19,6 +19,7 @@ export const AuthLayout = () => {
         errorElement={<div className="bg-red-700 text-white">Something went wrong!</div>}
         children={(user) => <AuthProvider userData={user}>{outlet}</AuthProvider>}
       />
+      <ScrollRestoration />
     </Suspense>
   );
 };
