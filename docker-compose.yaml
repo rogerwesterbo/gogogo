@@ -30,10 +30,10 @@ services:
     links:
       - openldap
     ports:
-      - "5554:5554"
-      - "5556:5556"
-      - "5557:5557"
-      - "5558:5558"
+      - "6554:5554"
+      - "6556:5556"
+      - "6557:5557"
+      - "6558:5558"
 
   init-dex-db:
     image: busybox
@@ -70,7 +70,7 @@ services:
     volumes:
       - ./data/openldap/config-ldap.ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom/custom-config.ldif
     ports:
-      - "389:389"
+      - "489:389"
 
   goapi:
     build:

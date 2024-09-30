@@ -24,7 +24,7 @@ function Login() {
     const responseType = 'id_token';
     const nonce = uuidv7();
 
-    const authUrl = `http://localhost:5556/dex/auth?client_id=${client_id}&response_type=${responseType}&redirect_uri=${redirect_uri}&scope=${scope}&nonce=${nonce}`;
+    const authUrl = `http://localhost:6556/dex/auth?client_id=${client_id}&response_type=${responseType}&redirect_uri=${redirect_uri}&scope=${scope}&nonce=${nonce}`;
 
     window.location.href = authUrl;
   }
