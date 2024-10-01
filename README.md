@@ -21,6 +21,7 @@ docker compose up
 ```
 
 - Open browser to goweb: http://localhost:8999
+  - login with username `superadmin@gogogo.dev`, and password `Hemmelig`
 - Or run curl/wget to api base url http://localhost:8888
 
 ## Debug:
