@@ -1,6 +1,6 @@
 build-goweb:
   stage: buildandtest
-  image: ncr.sky.nhn.no/dockerhub/library/node:latest
+  image: node:latest
   before_script:
     - cd $CI_PROJECT_DIR
     - cd web/goweb

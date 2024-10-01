@@ -1,6 +1,6 @@
 build-api:
   stage: buildandtest
-  image: ncr.sky.nhn.no/dockerhub/library/golang:latest
+  image: golang:latest
   before_script:
     - cd $CI_PROJECT_DIR
   script:
@@ -13,7 +13,7 @@ build-api:
     expire_in: 1 week
 
 sast-check:
-  image: ncr.sky.nhn.no/dockerhub/golang:1.23-alpine
+  image: golang:1.23-alpine
   stage: buildandtest
   dependencies:
     - build-api

@@ -1,11 +1,12 @@
 # Gogogo
 
-Test project for Golang
+Test project for Golang and React
 
 ## Prerequisites
 
 - Docker engine / Docker Desktop (or podman)
 - Golang sdk (https://go.dev)
+- node lts & npm
 
 Optional:
 
@@ -19,8 +20,8 @@ Optional:
 docker compose up
 ```
 
-- Open browser to http://localhost:8889
-- Or run curl/wget to api to host http://localhost:8888
+- Open browser to goweb: http://localhost:8999
+- Or run curl/wget to api base url http://localhost:8888
 
 ## Debug:
 
