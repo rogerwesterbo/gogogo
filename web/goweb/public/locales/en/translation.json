@@ -13,7 +13,20 @@
   },
   "pages": {
     "about": {
-      "title": "About GoWeb"
+      "title": "About GoWeb",
+      "feedback": {
+        "title": "Feedback",
+        "form": {
+          "email": "Email",
+          "emailPlaceholder": "Enter your email",
+          "message": "Message",
+          "messagePlaceholder": "Enter your message",
+          "name": "Name",
+          "namePlaceholder": "Enter your name",
+          "submit": "Submit",
+          "reset": "Reset"
+        }
+      }
     },
     "blogs": {
       "title": "Blogs"

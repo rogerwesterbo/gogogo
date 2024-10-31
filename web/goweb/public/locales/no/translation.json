@@ -13,7 +13,20 @@
   },
   "pages": {
     "about": {
-      "title": "Om GoWeb"
+      "title": "Om GoWeb",
+      "feedback": {
+        "title": "Tilbakemelding",
+        "form": {
+          "email": "Epost",
+          "emailPlaceholder": "Skriv inn din epost",
+          "message": "Tilbakemelding",
+          "messagePlaceholder": "Skriv inn din tilbakemelding",
+          "name": "Navn",
+          "namePlaceholder": "Skriv inn ditt navn",
+          "submit": "Send inn",
+          "reset": "Nullstill"
+        }
+      }
     },
     "blogs": {
       "title": "Blogg"
