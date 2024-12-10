@@ -1,4 +1,4 @@
-import { createBrowserRouter, createRoutesFromElements, defer, Route } from 'react-router-dom';
+import { createBrowserRouter, createRoutesFromElements, redirect, Route } from 'react-router-dom';
 import './App.css';
 
 import { AuthLayout } from './modules/auth/components/AuthLayout';
@@ -26,6 +26,11 @@ const getUserData = () =>
         resolve(null);
       } else {
         const decodedToken = jwtDecode(token);
+        if (!decodedToken.exp || decodedToken.exp * 1000 < Date.now()) {
+          localStorage.removeItem('token');
+          redirect('/login');
+          resolve(null);
+        }
 
         resolve(decodedToken);
       }
@@ -34,7 +39,7 @@ const getUserData = () =>
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route element={<AuthLayout />} loader={() => defer({ userPromise: getUserData() })}>
+    <Route element={<AuthLayout />} loader={() => ({ userPromise: getUserData() })}>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/logout" element={<LogoutPage />} />
       <Route path="/auth/callback" element={<CallbackPage />} />

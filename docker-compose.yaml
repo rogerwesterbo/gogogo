@@ -1,6 +1,6 @@
 services:
   dragonfly:
-    image: "docker.dragonflydb.io/dragonflydb/dragonfly"
+    image: docker.dragonflydb.io/dragonflydb/dragonfly
     ulimits:
       memlock: -1
     environment:
@@ -15,7 +15,7 @@ services:
       - ./data/dragonflydb:/data
 
   dex:
-    image: bitnami/dex:2.41.1
+    image: bitnami/dex:2
     restart: always
     volumes:
       - ./data/dex/configs:/configs
